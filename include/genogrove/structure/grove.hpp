@@ -9,10 +9,19 @@
 #ifndef STRUCTURE_GROVE_HPP
 #define STRUCTURE_GROVE_HPP
 
-class grove {
+// standard
+#include <unordered_map>
+
+// genogrove
+#include <genogrove/utility/ranges.hpp>
+
+namespace ggu = genogrove::utility;
+
+namespace genogrove::structure {
+    class grove {
     public:
-        grove();
         grove(int k);
+        grove();
         ~grove();
 
         /*
@@ -80,10 +89,14 @@ class grove {
 
         void split_node(Node* parent, int index);
 
+    private:
+        int order;
+        std::unordered_map<std::string, Node*> root_nodes;
+        std::unordered_map<std::string, Node*> rightmost_nodes;
 
+    };
 
+}
 
-
-};
 
 #endif //STRUCTURE_GROVE_HPP
