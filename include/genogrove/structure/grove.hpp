@@ -14,6 +14,7 @@
 
 // genogrove
 #include <genogrove/utility/ranges.hpp>
+#include <genogrove/structure/node.hpp>
 
 namespace ggu = genogrove::utility;
 
@@ -37,36 +38,36 @@ namespace genogrove::structure {
         /*
          * @brief return map with root nodes in the grove
          */
-        std::unordered_map<std::string, Node*> get_root_nodes();
+        std::unordered_map<std::string, node*> get_root_nodes();
 
         /*
          * @brief sets the map with root nodes in the grove
          */
-        void set_root_nodes(std::unordered_map<std::string, Node*> root_nodes);
+        void set_root_nodes(std::unordered_map<std::string, node*> root_nodes);
 
         /*
          * @brief returns the rightmost node in the grove (for easy access)
          * @param The chromosome the grove is associated with
          */
-        Node* get_rightmost_node(std::string key);
+        node* get_rightmost_node(std::string key);
 
         /*
          * @brief sets the rightmode node in the grove (for easy access)
          * @param The key the grove is associated with
          * @param The rightmost node in the grove
          */
-        void set_rightmost_node(std::string key, Node* node);
+        void set_rightmost_node(std::string key, node* node);
 
         /*
          * @brief get the root node of the grove for a given key
          * @param The key associated with the root node (of the grove)
          */
-        Node* get_root(std::string key);
+        node* get_root(std::string key);
 
         /*
          * @brief
          */
-        Node* insert_root(std::string key);
+        node* insert_root(std::string key);
 
         /*
          * @brief inserts a data point into the grove
@@ -85,14 +86,14 @@ namespace genogrove::structure {
          */
         void insert(std::string index, Key& key);
 
-        void insert_iter(Node* node, Key& key);
+        void insert_iter(node* node, Key& key);
 
-        void split_node(Node* parent, int index);
+        void split_node(node* parent, int index);
 
     private:
         int order;
-        std::unordered_map<std::string, Node*> root_nodes;
-        std::unordered_map<std::string, Node*> rightmost_nodes;
+        std::unordered_map<std::string, node*> root_nodes;
+        std::unordered_map<std::string, node*> rightmost_nodes;
 
     };
 
