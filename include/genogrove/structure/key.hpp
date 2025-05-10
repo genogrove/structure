@@ -30,7 +30,23 @@ namespace genogrove::structure {
              * @brief Default constructor
              */
             key();
-            key(const key&);
+
+            /*
+             * @brief Constructor of a key with arbitrary key object
+             */
+            key(key_type obj);
+
+            /*
+             * @brief destructor
+             */
+            ~key() = default;
+
+            bool operator<(const key_type& other) const;
+            bool operator>(const key_type& other) const;
+
+            void serialize(std::ostream& os) const;
+            key<key_type> deserialize(std::istream& is);
+
 
         private:
             key_type value;
