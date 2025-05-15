@@ -54,6 +54,9 @@ namespace genogrove::structure {
             is.read(reinterpret_cast<char*>(&type_name_length), sizeof(type_name_length));
             std::string type_name(type_name_length, '\0');
             is.read(&type_name[0], type_name_length);
+
+            // deserialize the data object
+            key.data =
         }
 
 
