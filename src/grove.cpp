@@ -22,4 +22,5 @@ namespace genogrove::structure {
         }
         return root;
     }
+
 }
