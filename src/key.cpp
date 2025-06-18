@@ -56,7 +56,7 @@ namespace genogrove::structure {
             is.read(&type_name[0], type_name_length);
 
             // deserialize the data object
-            key.data =
+            key.data = ggt::any_base::deserialize(is, type_name);
         }
 
 
