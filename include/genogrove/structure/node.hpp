@@ -16,11 +16,11 @@
 #include <genogrove/structure/key.hpp>
 
 namespace genogrove::structure {
+    template <typename key_type>
     class node {
         public:
             node(int k);
             ~node();
-
 
             // getter & setter
             int get_order();
@@ -36,14 +36,11 @@ namespace genogrove::structure {
             void set_is_leaf(bool is_leaf);
             bool get_is_leaf();
 
-            template<typename key_type>
-            void insert_key(key<int>& key1);
+            void insert_key(key<key_type>& key1);
 
-            template<typename key_type>
-            void insert_key(key<key_type>& key);
+            void insert_key(key<key_type>& key1, int index);
 
-            template<typename key_type>
-            key_type calc_parent_key(key<key_type>& key);
+            key_type calc_parent_key(key<key_type>& key1);
 
             void add_child(node* child, int index);
             node* get_child(int index);
@@ -59,12 +56,12 @@ namespace genogrove::structure {
 
         private:
             int order;
-            std::vector<node*> keys;
+            std::vector<key_type> keys;
             std::vector<node*> children;
             node* parent;
             node* next;
             bool is_leaf;
-    }
+    };
 }
 
 #endif //GENOGROVE_STRUCTURE_NODE_HPP

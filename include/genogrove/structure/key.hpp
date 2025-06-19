@@ -12,9 +12,11 @@
 
 // standard
 #include <vector>
+#include <istream>
 
 // genogrove
 #include <genogrove/data_type/any_type.hpp>
+#include <genogrove/data_type/type_registry.hpp>
 
 namespace ggt = genogrove::data_type;
 
