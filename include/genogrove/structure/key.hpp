@@ -43,6 +43,11 @@ namespace genogrove::structure {
              */
             ~key() = default;
 
+            /*
+             * @brief returns the value of the key
+             */
+            key_type get_value() const { return value; }
+
             bool operator<(const key_type& other) const;
             bool operator>(const key_type& other) const;
 

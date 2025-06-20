@@ -56,7 +56,7 @@ namespace genogrove::structure {
 
         private:
             int order;
-            std::vector<key_type> keys;
+            std::vector<key<key_type>> keys;
             std::vector<node*> children;
             node* parent;
             node* next;
