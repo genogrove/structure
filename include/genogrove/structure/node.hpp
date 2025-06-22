@@ -37,7 +37,6 @@ namespace genogrove::structure {
             bool get_is_leaf();
 
             void insert_key(key<key_type>& key1);
-
             void insert_key(key<key_type>& key1, int index);
 
             key_type calc_parent_key(key<key_type>& key1);
