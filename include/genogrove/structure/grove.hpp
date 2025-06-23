@@ -19,6 +19,7 @@
 namespace ggu = genogrove::utility;
 
 namespace genogrove::structure {
+    template<typename key_type>
     class grove {
     public:
         grove(int k);
@@ -38,12 +39,12 @@ namespace genogrove::structure {
         /*
          * @brief return map with root nodes in the grove
          */
-        std::unordered_map<std::string, node*> get_root_nodes();
+        std::unordered_map<std::string, node<key_type>*> get_root_nodes();
 
         /*
          * @brief sets the map with root nodes in the grove
          */
-        void set_root_nodes(std::unordered_map<std::string, node*> root_nodes);
+        void set_root_nodes(std::unordered_map<std::string, node<key_type>*> root_nodes);
 
         /*
          * @brief returns the rightmost node in the grove (for easy access)
@@ -56,18 +57,18 @@ namespace genogrove::structure {
          * @param The key the grove is associated with
          * @param The rightmost node in the grove
          */
-        void set_rightmost_node(std::string key, node* node);
+        void set_rightmost_node(std::string key, node<key_type>* node);
 
         /*
          * @brief get the root node of the grove for a given key
          * @param The key associated with the root node (of the grove)
          */
-        node* get_root(std::string key);
+        node<key_type>* get_root(std::string key);
 
         /*
          * @brief
          */
-        node* insert_root(std::string key);
+        node<key_type>* insert_root(std::string key);
 
         /*
          * @brief inserts a data point into the grove
