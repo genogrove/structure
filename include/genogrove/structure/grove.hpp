@@ -50,7 +50,7 @@ namespace genogrove::structure {
          * @brief returns the rightmost node in the grove (for easy access)
          * @param The chromosome the grove is associated with
          */
-        node* get_rightmost_node(std::string key);
+        node<key_type>* get_rightmost_node(std::string key);
 
         /*
          * @brief sets the rightmode node in the grove (for easy access)
@@ -76,9 +76,9 @@ namespace genogrove::structure {
          * @param The type of the key to be inserted
          * @param The data point
          */
-        template<typename key_type, typename data_type>
+        template<typename data_type>
         void insert_data(std::string index, key_type ktype, data_type dtype) {
-            Key key(ktype, dtype);
+            Key<key_type> key(ktype, dtype);
             insert(key, key);
         }
 

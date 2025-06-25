@@ -14,12 +14,15 @@
 
 // genogrove
 #include <genogrove/structure/key.hpp>
+#include <genogrove/data_type/interval.hpp>
+
+namespace ggt = genogrove::data_type;
 
 namespace genogrove::structure {
     template <typename key_type>
     class node {
         public:
-            node(int k);
+            node(int order);
             ~node();
 
             // getter & setter
@@ -36,10 +39,21 @@ namespace genogrove::structure {
             void set_is_leaf(bool is_leaf);
             bool get_is_leaf();
 
-            void insert_key(key<key_type>& key1);
-            void insert_key(key<key_type>& key1, int index);
+            void insert_key(key<key_type>& key1) {
+                int i = 0;
+                while(i < this->keys.size() && key1.get_value() > this->keys[i].get_value()) { i++; }
+                this->keys.insert(this->keys.begin() + i, key1);
+            }
+            void insert_key(key<key_type>& key1, int index) {
+                this->keys.insert(this->keys.begin() + index, key1);
+            }
 
-            key_type calc_parent_key(key<key_type>& key1);
+            key_type calc_parent_key(key<key_type>& key1) {
+                ggt::interval intvl{std::string::npos, 0};
+                for(int i=0;)
+
+
+            }
 
             void add_child(node* child, int index);
             node* get_child(int index);
