@@ -50,9 +50,13 @@ namespace genogrove::structure {
 
             key_type calc_parent_key(key<key_type>& key1) {
                 ggt::interval intvl{std::string::npos, 0};
-                for(int i=0;)
-
-
+                for (int i = 0; i < keys.size(); i++) {
+                    if (keys[i].getInterval().getStart() < intvl.getStart()) {
+                        intvl.setStart(keys[i].getInterval().getStart());
+                    }
+                    if (keys[i].getInterval().getEnd() > intvl.getEnd()) { intvl.setEnd(keys[i].getInterval().getEnd()); }
+                }
+                return intvl;
             }
 
             void add_child(node* child, int index);
