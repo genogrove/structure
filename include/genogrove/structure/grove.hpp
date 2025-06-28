@@ -78,18 +78,18 @@ namespace genogrove::structure {
          */
         template<typename data_type>
         void insert_data(std::string index, key_type ktype, data_type dtype) {
-            Key<key_type> key(ktype, dtype);
+            key<key_type> key(ktype, dtype);
             insert(key, key);
         }
 
         /*
          * @brief inserts a new key elements into the grove
          */
-        void insert(std::string index, Key& key);
+        void insert(std::string index, key<key_type>& key);
 
-        void insert_iter(node* node, Key& key);
+        void insert_iter(node<key_type>* node, key<key_type>& key);
 
-        void split_node(node* parent, int index);
+        void split_node(node<key_type>* parent, int index);
 
     private:
         int order;
