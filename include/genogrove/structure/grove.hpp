@@ -22,9 +22,9 @@ namespace genogrove::structure {
     template<typename key_type>
     class grove {
     public:
-        grove(int k);
-        grove();
-        ~grove();
+        grove(int order) : order(order), root_nodes(), rightmost_nodes() {}
+        grove() : order(3), root_nodes(), rightmost_nodes() {}
+        ~grove() {}
 
         /*
          * @brief returns the order of the grove
@@ -93,8 +93,8 @@ namespace genogrove::structure {
 
     private:
         int order;
-        std::unordered_map<std::string, node*> root_nodes;
-        std::unordered_map<std::string, node*> rightmost_nodes;
+        std::unordered_map<std::string, node<key_type>*> root_nodes;
+        std::unordered_map<std::string, node<key_type>*> rightmost_nodes;
 
     };
 
