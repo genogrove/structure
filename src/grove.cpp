@@ -1,10 +1,6 @@
 #include <genogrove/structure/grove.hpp>
 
 namespace genogrove::structure {
-    // constructors
-    grove::grove(int k) : order(k), root_nodes(), rightmost_nodes() {}
-    grove::grove() : order(3), root_nodes(), rightmost_nodes() {}
-    grove::~grove() {}
 
     // getters & setters
     int grove::get_order() { return this->order; }

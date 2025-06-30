@@ -29,12 +29,12 @@ namespace genogrove::structure {
         /*
          * @brief returns the order of the grove
          */
-        int get_order();
+        int get_order() { return this->order; }
 
         /*
          * @brief sets the order of the grove
          */
-        void set_order(int k);
+        void set_order(int order) { this->order = order; }
 
         /*
          * @brief return map with root nodes in the grove
