@@ -2,8 +2,6 @@
 
 namespace genogrove::structure {
 
-    // getters & setters
-    void grove::set_order(int k) { this->order = k; }
     std::unordered_map<std::string, node*> grove::get_root_nodes() { return this->root_nodes; }
     void grove::set_root_nodes(std::unordered_map<std::string, node*> root_nodes) { this->root_nodes = root_nodes; }
     node* grove::get_rightmost_node(std::string key) { return this->rightmost_nodes[key]; }
