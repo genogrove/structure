@@ -44,7 +44,9 @@ namespace genogrove::structure {
         /*
          * @brief sets the map with root nodes in the grove
          */
-        void set_root_nodes(std::unordered_map<std::string, node<key_type>*> root_nodes);
+        void set_root_nodes(std::unordered_map<std::string, node<key_type>*> root_nodes) {
+            this->root_nodes = root_nodes;
+        }
 
         /*
          * @brief returns the rightmost node in the grove (for easy access)
