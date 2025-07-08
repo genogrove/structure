@@ -52,7 +52,9 @@ namespace genogrove::structure {
          * @brief returns the rightmost node in the grove (for easy access)
          * @param The chromosome the grove is associated with
          */
-        node<key_type>* get_rightmost_node(std::string key);
+        node<key_type>* get_rightmost_node(std::string key) {
+            return this->rightmost_nodes[key];
+        }
 
         /*
          * @brief sets the rightmode node in the grove (for easy access)
