@@ -61,7 +61,9 @@ namespace genogrove::structure {
          * @param The key the grove is associated with
          * @param The rightmost node in the grove
          */
-        void set_rightmost_node(std::string key, node<key_type>* node);
+        void set_rightmost_node(std::string key, node<key_type>* node) {
+            return this->rightmost_nodes[key] = node;
+        }
 
         /*
          * @brief get the root node of the grove for a given key
