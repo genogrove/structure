@@ -70,9 +70,9 @@ namespace genogrove::structure {
          * @param The key associated with the root node (of the grove)
          */
         node<key_type>* get_root(std::string key) {
-            node* root = nullptr;
+            node<key_type>* root = nullptr;
             // check if the root node is in the map
-            if(ggu::ranges::contains(this->root_nodes, key)) {
+            if(ggu::key_lookup(this->root_nodes, key)) {
                 root = this->root_nodes[key];
             }
             return root;
