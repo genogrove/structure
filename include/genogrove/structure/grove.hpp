@@ -39,7 +39,9 @@ namespace genogrove::structure {
         /*
          * @brief return map with root nodes in the grove
          */
-        std::unordered_map<std::string, node<key_type>*> get_root_nodes();
+        std::unordered_map<std::string, node<key_type>*> get_root_nodes() {
+            return this->root_nodes;
+        }
 
         /*
          * @brief sets the map with root nodes in the grove
@@ -81,7 +83,9 @@ namespace genogrove::structure {
         /*
          * @brief
          */
-        node<key_type>* insert_root(std::string key);
+        node<key_type>* insert_root(std::string key) {
+
+        }
 
         /*
          * @brief inserts a data point into the grove
