@@ -84,6 +84,9 @@ namespace genogrove::structure {
          * @brief
          */
         node<key_type>* insert_root(std::string key) {
+            // TODO: check if the key already exists
+
+
 
         }
 
