@@ -84,7 +84,13 @@ namespace genogrove::structure {
          * @brief
          */
         node<key_type>* insert_root(std::string key) {
-            // TODO: check if the key already exists
+            // check if the root node is already in the map (error)
+            if(ggu::key_lookup(this->root_nodes, key)) {
+                throw std::runtime_error("Root node already exists for key: " + key);
+            }
+            node<key_type>* root = new node<key_type>(this->order);
+            root->set_is_leaf(true);
+            
 
 
 
