@@ -90,9 +90,6 @@ namespace genogrove::structure {
             }
             node<key_type>* root = new node<key_type>(this->order);
             root->set_is_leaf(true);
-            
-
-
 
         }
 
