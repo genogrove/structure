@@ -81,7 +81,7 @@ namespace genogrove::structure {
         }
 
         /*
-         * @brief
+         * @brief inserts a new root node into the grove
          */
         node<key_type>* insert_root(std::string key) {
             // check if the root node is already in the map (error)
