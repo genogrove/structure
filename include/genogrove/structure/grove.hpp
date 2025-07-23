@@ -90,7 +90,8 @@ namespace genogrove::structure {
             }
             node<key_type>* root = new node<key_type>(this->order);
             root->set_is_leaf(true);
-
+            this->rightmost_nodes.insert({key, root});
+            return root;
         }
 
         /*
@@ -112,7 +113,14 @@ namespace genogrove::structure {
 
         void insert_iter(node<key_type>* node, key<key_type>& key);
 
-        void split_node(node<key_type>* parent, int index);
+        void split_node(node<key_type>* parent, int index) {
+            node<key_type>* child = parent->get_child(index);
+            node<key_type>* new_child = new node<key_type>(this->order);
+            int mid = ((this->order+2-1)/2);
+
+            // move overflowing keys to new child node (and resize the original node)
+            
+        }
 
     private:
         int order;
