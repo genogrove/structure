@@ -111,7 +111,12 @@ namespace genogrove::structure {
          */
         void insert(std::string index, key<key_type>& key);
 
-        void insert_iter(node<key_type>* node, key<key_type>& key);
+        /*
+         * @brief inserts a new key into the grove
+         */
+        void insert_iter(node<key_type>* node, key<key_type>& key) {
+
+        }
 
         void split_node(node<key_type>* parent, int index) {
             node<key_type>* child = parent->get_child(index);
