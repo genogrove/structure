@@ -109,7 +109,9 @@ namespace genogrove::structure {
         /*
          * @brief inserts a new key elements into the grove
          */
-        void insert(std::string index, key<key_type>& key);
+        void insert(std::string index, key<key_type>& key) {
+            
+        }
 
         /*
          * @brief inserts a new key into the grove
