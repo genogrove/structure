@@ -110,7 +110,11 @@ namespace genogrove::structure {
          * @brief inserts a new key elements into the grove
          */
         void insert(std::string index, key<key_type>& key) {
-            
+            // get the root node for the given chromosome (or create a new one if it doesn't exist)
+            node<key_type>* root = this->get_root(index);
+            if(root == nullptr) { root = this->insert_root(index); }
+            insert_iter(root, key);
+
         }
 
         /*
