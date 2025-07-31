@@ -114,7 +114,14 @@ namespace genogrove::structure {
             node<key_type>* root = this->get_root(index);
             if(root == nullptr) { root = this->insert_root(index); }
             insert_iter(root, key);
-
+            if(root->get_keys().size() == this->order) {
+                node<key_type>* new_root = new node<key_type>(this->order);
+                new_root->add_child(root, 0);
+                new_root->set_is_leaf(false);
+                split_node(new_root, 0);
+                root = new_root;
+                this->root_nodes[index] = root; // update the root node in the map
+            }
         }
 
         /*
