@@ -128,10 +128,24 @@ namespace genogrove::structure {
          * @brief inserts a new key into the grove
          */
         void insert_iter(node<key_type>* node, key<key_type>& key) {
-            /*
-             * 
-             */
+            if(!node) { throw std::runtime_error("Null node passed to insert_iter"); }
+            if(node->get_is_leaf()) {
+                try {
+                    node->insert_key(key);
 
+                } catch(const std::exception& e) {
+                    std::cerr << "Failed to insert key into leaf node: " << e.what() << std::endl;
+                }
+            } else {
+                int child_index = 0;
+                while(child_index < node->get_keys().size() && key > node->get_keys()[child_index]) {
+                    child_index++;
+                }
+                insert_iter(node->get_child(child_index), key);
+                if(node->get_child(child_index)->get_keys().size() == this->order) {
+                    split_node(node, child_index);
+                }
+            }
         }
 
         void split_node(node<key_type>* parent, int index) {
