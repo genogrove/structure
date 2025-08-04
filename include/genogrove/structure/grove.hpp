@@ -178,8 +178,12 @@ namespace genogrove::structure {
             } else {
                 new_child->get_children().assign(child->get_children().begin() + mid, child->get_children().end());
                 child->get_children().resize(mid + 1); // resize the original node
-
             }
+        }
+
+        void insert_sorted(key<key_type>* key, std::string index) {
+
+
         }
 
     private:
