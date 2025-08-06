@@ -182,6 +182,19 @@ namespace genogrove::structure {
         }
 
         void insert_sorted(key<key_type>* key, std::string index) {
+            // get the root node for the given index (or create a new one if it doesn't exist)
+            node<key_type>* root = this->get_root(index);
+            if(root == nullptr) {
+                root = insert_root(index);
+                insert_iter(root, index);
+                return;
+            }
+
+            // get the rightmost node and check if the key is sorted (greater than the rightmost key)
+            node<key_type>* rightmost = this->get_rightmost_node(index);
+            if(!rightmost->get_keys().empty() &&
+            )
+
 
 
         }
