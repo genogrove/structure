@@ -193,10 +193,15 @@ namespace genogrove::structure {
             // get the rightmost node and check if the key is sorted (greater than the rightmost key)
             node<key_type>* rightmost = this->get_rightmost_node(index);
             if(!rightmost->get_keys().empty() &&
-            )
+            key->get_value() <= rightmost->get_keys().back().get_value()) {
+                throw std::runtime_error("Key is not sorted: " + key->get_value());
+            }
 
-
-
+            // insert the key into the grove
+            rightmost_nodes->insert_key(key);
+            if(rightmost->get_keys().size() == this->order) {
+                split_node_sorted(rightmost, index);
+            }
         }
 
     private:
