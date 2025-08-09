@@ -204,6 +204,10 @@ namespace genogrove::structure {
             }
         }
 
+        void split_node_sorted(node<key_type* node, const std::string& index) {}
+
+        
+
     private:
         int order;
         std::unordered_map<std::string, node<key_type>*> root_nodes;
