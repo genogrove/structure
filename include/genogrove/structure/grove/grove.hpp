@@ -13,8 +13,8 @@
 #include <unordered_map>
 
 // genogrove
-#include <genogrove/utility/ranges.hpp>
-#include <genogrove/structure/node.hpp>
+#include "genogrove/utility/ranges.hpp"
+#include "node.hpp"
 
 namespace ggu = genogrove::utility;
 
@@ -204,9 +204,31 @@ namespace genogrove::structure {
             }
         }
 
-        void split_node_sorted(node<key_type* node, const std::string& index) {}
+        void split_node_sorted(node<key_type>* node1, const std::string& index) {
+            if(node1 == root_nodes[index]) {
+                node<key_type>* new_root = new node<key_type>(this->order);
+                new_root->add_child(node1, 0);
+                split_node(new_root, 0);
+            }
 
-        
+            int child_index = 0;
+            while(child_index < node1->get_parent()->get_children().size()) {
+                if(node1->get_parent()->get_children(child_index) == node1) {
+                    break;
+                }
+                child_index++;
+            }
+            // split the node
+            split_node(node1->get_parent(), child_index);
+            if(node1->get_parent()->get_children().size() == this->order) {
+                split_node_sorted(node1->get_parent(), index);
+            }
+        }
+
+
+
+
+
 
     private:
         int order;

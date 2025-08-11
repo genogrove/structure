@@ -13,8 +13,8 @@
 #include <vector>
 
 // genogrove
-#include <genogrove/structure/key.hpp>
-#include <genogrove/data_type/interval.hpp>
+#include "key.hpp"
+#include "genogrove/data_type/interval.hpp"
 
 namespace ggt = genogrove::data_type;
 
