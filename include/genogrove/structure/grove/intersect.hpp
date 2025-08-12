@@ -8,6 +8,7 @@ namespace ggt = genogrove::data_type;
 namespace genogrove::structure::grove {
     template<typename query_type>
     ggt::query_result<query_type> intersect(query_type& query) {
+        ggt::query_result<query_type> result{query};
 
     }
 }
