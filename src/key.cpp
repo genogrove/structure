@@ -1,4 +1,4 @@
-#include <genogrove/structure/key.hpp>
+#include "genogrove/structure/grove/key.hpp"
 
 namespace genogrove::structure {
     template<typename key_type>

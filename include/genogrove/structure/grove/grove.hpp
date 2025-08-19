@@ -14,9 +14,12 @@
 
 // genogrove
 #include "genogrove/utility/ranges.hpp"
+#include <genogrove/data_type/query_result.hpp>
+
 #include "node.hpp"
 
 namespace ggu = genogrove::utility;
+namespace ggt = genogrove::data_type;
 
 namespace genogrove::structure {
     template<typename key_type>
@@ -224,6 +227,19 @@ namespace genogrove::structure {
                 split_node_sorted(node1->get_parent(), index);
             }
         }
+
+        template <typename query_type>
+        ggt::query_result<key_type> intersect(query_type& query) {
+            ggt::query_result<key_type> result{query};
+            // if index is not specified, all root nodes need to be checked
+            for(const auto& [index, root] : this->get_root_nodes()) {
+
+            }
+            
+
+        }
+
+
 
 
 
