@@ -106,7 +106,7 @@ namespace genogrove::structure {
         template<typename data_type>
         void insert_data(std::string index, key_type ktype, data_type dtype) {
             key<key_type> key(ktype, dtype);
-            insert(key, key);
+            insert(index, key);
         }
 
         /*
@@ -141,7 +141,8 @@ namespace genogrove::structure {
                 }
             } else {
                 int child_index = 0;
-                while(child_index < node->get_keys().size() && key > node->get_keys()[child_index]) {
+                while(child_index < node->get_keys().size() &&
+                    key.get_value() > node->get_keys()[child_index]->get_value()) {
                     child_index++;
                 }
                 insert_iter(node->get_child(child_index), key);
@@ -233,17 +234,39 @@ namespace genogrove::structure {
             ggt::query_result<key_type> result{query};
             // if index is not specified, all root nodes need to be checked
             for(const auto& [index, root] : this->get_root_nodes()) {
-
+                search_iter(root, query, result);
             }
-            
-
+            return result;
         }
 
+        template <typename query_type>
+        ggt::query_result<key_type> intersect(query_type& query, const std::string& index) {
+            ggt::query_result<key_type> result{query};
+            node<key_type>* root = this->get_root(index);
+            if(root == nullptr) { return result; }
+            search_iter(root, query, result);
+            return result;
+        }
 
-
-
-
-
+        void search_iter(node<key_type>* node, key_type& query, ggt::query_result<key_type>& result) {
+            if(node == nullptr) { return; }
+            if(node->get_is_leaf()) {
+                int last_match = -1;
+                for(int i = 0; i < node->get_keys().size(); ++i) {
+                    if(key_type::overlap(node->get_kets()[i].get_value(), query)) {
+                        last_match = i;
+                        result.add_key(node->get_keys()[i]);
+                    }
+                }
+            } else {
+                // if(query.get_value() < node->get_keys()[0].get_value()) { return; } TODO: check how to shortcut search when comparing with root/nodes
+                int i = 0;
+                while(i < node->get_keys().size() && (query.get_value() > node->get_keys()[i].get_value())) { i++; }
+                if(node->get_children()[i] != nullptr) {
+                    search_iter(node->get_children()[i], query, result);
+                }
+            }
+        }
 
 
     private:

@@ -43,8 +43,7 @@ if(NOT TARGET genogrove_data_type)
 endif()
 
 FILE(GLOB SOURCES "src/*.cpp")
-add_library(genogrove_structure ${SOURCES}
-        include/genogrove/structure/grove/key.hpp)
+add_library(genogrove_structure ${SOURCES})
 target_include_directories(genogrove_structure
         PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -58,7 +57,7 @@ target_link_libraries(genogrove_structure
 
 if(BUILD_TESTS)
     enable_testing()
-    add_subdirectory(test)
+    add_subdirectory(tests)
 endif()
 
 

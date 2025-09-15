@@ -13,7 +13,7 @@
 #include <vector>
 
 // genogrove
-#include "key.hpp"
+#include <genogrove/data_type/>
 #include "genogrove/data_type/interval.hpp"
 
 namespace ggt = genogrove::data_type;
@@ -28,8 +28,8 @@ namespace genogrove::structure {
             // getter & setter
             int get_order();
             void set_order(int k);
-            std::vector<node*> get_keys();
-            void set_keys(std::vector<node*> keys);
+            std::vector<key<key_type>*> get_keys();
+            void set_keys(std::vector<key<key_type>*> keys);
             std::vector<node*>& get_children();
             void set_children(std::vector<node*> children);
             node* get_parent();
@@ -48,6 +48,7 @@ namespace genogrove::structure {
                 this->keys.insert(this->keys.begin() + index, key1);
             }
 
+            template<typename >
             key_type calc_parent_key(key<key_type>& key1) {
                 ggt::interval intvl{std::string::npos, 0};
                 for (int i = 0; i < keys.size(); i++) {
