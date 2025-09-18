@@ -41,7 +41,7 @@ namespace genogrove::structure {
             std::vector<gdt::key<key_type>>& get_keys() {
                 return this->keys;
             }
-            void set_keys(std::vector<gdt::key<key_type>*> keys) {
+            void set_keys(std::vector<gdt::key<key_type>> keys) {
                 this->keys = keys;
             }
             std::vector<node*>& get_children() {

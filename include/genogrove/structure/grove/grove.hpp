@@ -155,8 +155,8 @@ namespace genogrove::structure {
             // move overflowing keys to the new child node (and resize the original node)
             new_child->set_is_leaf(child->get_is_leaf());
 
-            new_child->get_keys().erase(child->get_keys().begin() + mid, child->get_keys().end());
-            // child->get_keys().resize(mid); // resize the original node
+            new_child->get_keys().assign(child->get_keys().begin() + mid, child->get_keys().end());
+            child->get_keys().resize(mid); // resize the original node
 
             // update the parent (aka new child node)
             parent->get_children().insert(parent->get_children().begin() + index + 1, new_child);
