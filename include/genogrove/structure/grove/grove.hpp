@@ -19,7 +19,7 @@
 #include "node.hpp"
 
 namespace ggu = genogrove::utility;
-namespace ggt = genogrove::data_type;
+namespace gdt = genogrove::data_type;
 
 namespace genogrove::structure {
     template<typename key_type>
@@ -75,12 +75,7 @@ namespace genogrove::structure {
          * @param The key associated with the root node (of the grove)
          */
         node<key_type>* get_root(std::string key) {
-            node<key_type>* root = nullptr;
-            // check if the root node is in the map
-            if(ggu::key_lookup(this->root_nodes, key)) {
-                root = this->root_nodes[key];
-            }
-            return root;
+            return ggu::value_lookup(this->root_nodes, key).value_or(nullptr);
         }
 
         /*
@@ -88,7 +83,7 @@ namespace genogrove::structure {
          */
         node<key_type>* insert_root(std::string key) {
             // check if the root node is already in the map (error)
-            if(ggu::key_lookup(this->root_nodes, key)) {
+            if(ggu::value_lookup(this->root_nodes, key)) {
                 throw std::runtime_error("Root node already exists for key: " + key);
             }
             node<key_type>* root = new node<key_type>(this->order);
@@ -105,14 +100,14 @@ namespace genogrove::structure {
          */
         template<typename data_type>
         void insert_data(std::string index, key_type ktype, data_type dtype) {
-            key<key_type> key(ktype, dtype);
+            gdt::key<key_type> key(ktype, dtype);
             insert(index, key);
         }
 
         /*
          * @brief inserts a new key elements into the grove
          */
-        void insert(std::string index, key<key_type>& key) {
+        void insert(std::string index, gdt::key<key_type>& key) {
             // get the root node for the given chromosome (or create a new one if it doesn't exist)
             node<key_type>* root = this->get_root(index);
             if(root == nullptr) { root = this->insert_root(index); }
@@ -130,7 +125,7 @@ namespace genogrove::structure {
         /*
          * @brief inserts a new key into the grove
          */
-        void insert_iter(node<key_type>* node, key<key_type>& key) {
+        void insert_iter(node<key_type>* node, gdt::key<key_type>& key) {
             if(!node) { throw std::runtime_error("Null node passed to insert_iter"); }
             if(node->get_is_leaf()) {
                 try {
@@ -142,7 +137,7 @@ namespace genogrove::structure {
             } else {
                 int child_index = 0;
                 while(child_index < node->get_keys().size() &&
-                    key.get_value() > node->get_keys()[child_index]->get_value()) {
+                    key.get_value() > node->get_keys()[child_index].get_value()) {
                     child_index++;
                 }
                 insert_iter(node->get_child(child_index), key);
@@ -165,7 +160,7 @@ namespace genogrove::structure {
 
             // update the parent (aka new child node)
             parent->get_children().insert(parent->get_children().begin() + index + 1, new_child);
-            key<key_type> parent_key{child->calc_parent_key()};
+            gdt::key<key_type> parent_key{child->calc_parent_key()};
             parent->get_keys().insert(parent->get_keys().begin() + index, parent_key);
 
             if(child->get_is_leaf()) {
@@ -185,7 +180,7 @@ namespace genogrove::structure {
             }
         }
 
-        void insert_sorted(key<key_type>* key, std::string index) {
+        void insert_sorted(gdt::key<key_type>* key, std::string index) {
             // get the root node for the given index (or create a new one if it doesn't exist)
             node<key_type>* root = this->get_root(index);
             if(root == nullptr) {
@@ -230,8 +225,8 @@ namespace genogrove::structure {
         }
 
         template <typename query_type>
-        ggt::query_result<key_type> intersect(query_type& query) {
-            ggt::query_result<key_type> result{query};
+        gdt::query_result<key_type> intersect(query_type& query) {
+            gdt::query_result<key_type> result{query};
             // if index is not specified, all root nodes need to be checked
             for(const auto& [index, root] : this->get_root_nodes()) {
                 search_iter(root, query, result);
@@ -240,15 +235,15 @@ namespace genogrove::structure {
         }
 
         template <typename query_type>
-        ggt::query_result<key_type> intersect(query_type& query, const std::string& index) {
-            ggt::query_result<key_type> result{query};
+        gdt::query_result<key_type> intersect(query_type& query, const std::string& index) {
+            gdt::query_result<key_type> result{query};
             node<key_type>* root = this->get_root(index);
             if(root == nullptr) { return result; }
             search_iter(root, query, result);
             return result;
         }
 
-        void search_iter(node<key_type>* node, key_type& query, ggt::query_result<key_type>& result) {
+        void search_iter(node<key_type>* node, key_type& query, gdt::query_result<key_type>& result) {
             if(node == nullptr) { return; }
             if(node->get_is_leaf()) {
                 int last_match = -1;

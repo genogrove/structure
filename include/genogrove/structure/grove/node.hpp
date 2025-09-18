@@ -13,55 +13,84 @@
 #include <vector>
 
 // genogrove
-#include <genogrove/data_type/>
+#include "genogrove/data_type/key.hpp"
 #include "genogrove/data_type/interval.hpp"
 
-namespace ggt = genogrove::data_type;
+namespace gdt = genogrove::data_type;
 
 namespace genogrove::structure {
     template <typename key_type>
     class node {
         public:
-            node(int order);
+            node(int order) :
+                order(order),
+                keys{},
+                children{},
+                parent{nullptr},
+                next{nullptr},
+                is_leaf{false} {}
             ~node();
 
             // getter & setter
-            int get_order();
-            void set_order(int k);
-            std::vector<key<key_type>*> get_keys();
-            void set_keys(std::vector<key<key_type>*> keys);
-            std::vector<node*>& get_children();
-            void set_children(std::vector<node*> children);
-            node* get_parent();
-            void set_parent(node* parent);
-            void set_next(node* next);
-            node* get_next();
-            void set_is_leaf(bool is_leaf);
-            bool get_is_leaf();
+            int get_order() {
+                return this->order;
+            }
+            void set_order(int k) {
+                this->order = k;
+            }
+            std::vector<gdt::key<key_type>>& get_keys() {
+                return this->keys;
+            }
+            void set_keys(std::vector<gdt::key<key_type>> keys) {
+                this->keys = keys;
+            }
+            std::vector<node*>& get_children() {
+                return this->children;
+            }
+            void set_children(std::vector<node*> children) {
+                this->children = children;
+            }
+            node* get_parent() {
+                return this->parent;
+            }
+            void set_parent(node* parent) {
+                this->parent = parent;
+            }
+            void set_next(node* next) {
+                this->next = next;
+            }
+            node* get_next() {
+                return this->next;
+            }
+            void set_is_leaf(bool is_leaf) {
+                this->is_leaf = is_leaf;
+            }
+            bool get_is_leaf() {
+                return this->is_leaf;
+            }
 
-            void insert_key(key<key_type>& key1) {
+            void insert_key(gdt::key<key_type>& key1) {
                 int i = 0;
                 while(i < this->keys.size() && key1.get_value() > this->keys[i].get_value()) { i++; }
                 this->keys.insert(this->keys.begin() + i, key1);
             }
-            void insert_key(key<key_type>& key1, int index) {
+            void insert_key(gdt::key<key_type>& key1, int index) {
                 this->keys.insert(this->keys.begin() + index, key1);
             }
 
-            template<typename >
-            key_type calc_parent_key(key<key_type>& key1) {
-                ggt::interval intvl{std::string::npos, 0};
-                for (int i = 0; i < keys.size(); i++) {
-                    if (keys[i].getInterval().getStart() < intvl.getStart()) {
-                        intvl.setStart(keys[i].getInterval().getStart());
-                    }
-                    if (keys[i].getInterval().getEnd() > intvl.getEnd()) { intvl.setEnd(keys[i].getInterval().getEnd()); }
+            key_type calc_parent_key() {
+                // create vector of reference intervals
+                std::vector<key_type> values = {};
+                for (int i = 0; i < this->keys.size(); i++) {
+                    values.push_back(this->keys[i].get_value());
                 }
-                return intvl;
+                return key_type::aggregate(values);
             }
 
-            void add_child(node* child, int index);
-            node* get_child(int index);
+            void add_child(node* child, int index) {
+                this->children.insert(this->children.begin() + index, child);
+            }
+            node* get_child(int index) { return this->children[index]; }
 
             /*
              *
@@ -74,7 +103,7 @@ namespace genogrove::structure {
 
         private:
             int order;
-            std::vector<key<key_type>> keys;
+            std::vector<gdt::key<key_type>> keys;
             std::vector<node*> children;
             node* parent;
             node* next;
