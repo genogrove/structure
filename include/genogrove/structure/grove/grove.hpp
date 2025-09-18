@@ -248,7 +248,7 @@ namespace genogrove::structure {
             if(node->get_is_leaf()) {
                 int last_match = -1;
                 for(int i = 0; i < node->get_keys().size(); ++i) {
-                    if(key_type::overlap(node->get_kets()[i].get_value(), query)) {
+                    if(key_type::overlap(node->get_keys()[i].get_value(), query)) {
                         last_match = i;
                         result.add_key(node->get_keys()[i]);
                     }
