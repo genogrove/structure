@@ -98,7 +98,12 @@ namespace genogrove::structure {
             void serialize(std::ostream& os);
             static node* deserialize(std::istream& is, int order);
 
-            void print_keys(std::ostream& os, std::string sep="\t");
+            void print_keys(std::ostream& os, std::string sep="\t") {
+                for (int i = 0; i < this->keys.size(); ++i) {
+                    os << this->keys[i].get_value().toString() << sep;
+                }
+                os << std::endl;
+            }
 
 
         private:

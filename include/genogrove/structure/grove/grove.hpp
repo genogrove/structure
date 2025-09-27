@@ -273,7 +273,6 @@ namespace genogrove::structure {
                 int i = 0;
                 while(i < node->get_keys().size() && (query > node->get_keys()[i].get_value())
                     && !key_type::overlap(node->get_keys()[i].get_value(), query)) { i++; }
-                    std::cout << "i: " << i << std::endl;
                     if(node->get_children()[i] != nullptr) {
                         search_iter(node->get_children()[i], query, result);
                     }
