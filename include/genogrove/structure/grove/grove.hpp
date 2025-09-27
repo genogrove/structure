@@ -87,6 +87,7 @@ namespace genogrove::structure {
                 throw std::runtime_error("Root node already exists for key: " + key);
             }
             node<key_type>* root = new node<key_type>(this->order);
+            this->root_nodes.insert({key, root});
             root->set_is_leaf(true);
             this->rightmost_nodes.insert({key, root});
             return root;
@@ -234,33 +235,49 @@ namespace genogrove::structure {
             return result;
         }
 
-        template <typename query_type>
-        gdt::query_result<key_type> intersect(query_type& query, const std::string& index) {
+        // template <typename query_type>
+        gdt::query_result<key_type> intersect(key_type& query, const std::string& index) {
             gdt::query_result<key_type> result{query};
             node<key_type>* root = this->get_root(index);
+
             if(root == nullptr) { return result; }
             search_iter(root, query, result);
             return result;
         }
 
         void search_iter(node<key_type>* node, key_type& query, gdt::query_result<key_type>& result) {
+            std::cout << "Searching for query: " << query.toString() << std::endl;
+            std::cout << "Current Node keys: ";
+            node->print_keys(std::cout, "\t");
+            std::cout << std::endl;
             if(node == nullptr) { return; }
             if(node->get_is_leaf()) {
                 int last_match = -1;
                 for(int i = 0; i < node->get_keys().size(); ++i) {
+                    std::cout << "Checking key: " << node->get_keys()[i].get_value().toString() << " against query: " << query.toString() << std::endl;
                     if(key_type::overlap(node->get_keys()[i].get_value(), query)) {
                         last_match = i;
-                        result.add_key(node->get_keys()[i]);
+                        result.add_key(&node->get_keys()[i]);
+                    }
+                }
+                // check if there is an overlap within the next node (if so we have to traverse it)
+                if (node->get_next() != nullptr) {
+                    int last_key = node->get_keys().size() - 1; // index of the last key in the current node
+                    if (key_type::overlap(node->get_keys()[last_key].get_value(), query)) {
+                        search_iter(node->get_next(), query, result);
                     }
                 }
             } else {
-                // if(query.get_value() < node->get_keys()[0].get_value()) { return; } TODO: check how to shortcut search when comparing with root/nodes
+            //     // if(query.get_value() < node->get_keys()[0].get_value()) { return; } TODO: check how to shortcut search when comparing with root/nodes
+                std::cout << "Node is not a leaf, traversing children..." << std::endl;
                 int i = 0;
-                while(i < node->get_keys().size() && (query.get_value() > node->get_keys()[i].get_value())) { i++; }
-                if(node->get_children()[i] != nullptr) {
-                    search_iter(node->get_children()[i], query, result);
+                while(i < node->get_keys().size() && (query > node->get_keys()[i].get_value())
+                    && !key_type::overlap(node->get_keys()[i].get_value(), query)) { i++; }
+                    std::cout << "i: " << i << std::endl;
+                    if(node->get_children()[i] != nullptr) {
+                        search_iter(node->get_children()[i], query, result);
+                    }
                 }
-            }
         }
 
 
