@@ -246,15 +246,10 @@ namespace genogrove::structure {
         }
 
         void search_iter(node<key_type>* node, key_type& query, gdt::query_result<key_type>& result) {
-            std::cout << "Searching for query: " << query.toString() << std::endl;
-            std::cout << "Current Node keys: ";
-            node->print_keys(std::cout, "\t");
-            std::cout << std::endl;
             if(node == nullptr) { return; }
             if(node->get_is_leaf()) {
                 int last_match = -1;
                 for(int i = 0; i < node->get_keys().size(); ++i) {
-                    std::cout << "Checking key: " << node->get_keys()[i].get_value().toString() << " against query: " << query.toString() << std::endl;
                     if(key_type::overlap(node->get_keys()[i].get_value(), query)) {
                         last_match = i;
                         result.add_key(&node->get_keys()[i]);
@@ -268,8 +263,13 @@ namespace genogrove::structure {
                     }
                 }
             } else {
-            //     // if(query.get_value() < node->get_keys()[0].get_value()) { return; } TODO: check how to shortcut search when comparing with root/nodes
-                std::cout << "Node is not a leaf, traversing children..." << std::endl;
+                // abort if left of key (not overlapping) - only neded for intervals
+                if constexpr (key_type::is_interval) {
+                    if (query < node->get_keys()[0].get_value() &&
+                        !key_type::overlap(node->get_keys()[0].get_value(), query)) {
+                        return;
+                    }
+                }
                 int i = 0;
                 while(i < node->get_keys().size() && (query > node->get_keys()[i].get_value())
                     && !key_type::overlap(node->get_keys()[i].get_value(), query)) { i++; }
@@ -279,7 +279,6 @@ namespace genogrove::structure {
                     }
                 }
         }
-
 
     private:
         int order;
