@@ -27,10 +27,10 @@ This repository contains the data structures that are used in genogrove.
     cmake --build build
    ```
 3. Run tests (optional):
-    Note this requires the cmake to be called with `-DBUILD_TESTING=ON`
     ```
    ctest -C Release
    ```
+   Note this requires the cmake to be called with `-DBUILD_TESTING=ON`
 4. Include in your project:
    - Add structure/include to your include path. 
    - Link against the built library in your cmake or build system
@@ -38,5 +38,9 @@ This repository contains the data structures that are used in genogrove.
 ## Documentation
 
 An extensive documentation can be found at [www.genogrove.com](https://www.genogrove.com).
+
+## License 
+
+Distributed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html) 
 
 
