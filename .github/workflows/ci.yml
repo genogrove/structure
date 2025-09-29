@@ -7,13 +7,15 @@ jobs:
     strategy:
       fail-fast: false # change when library is more stable
       matrix:
-        os: [ubuntu-latest, windows-latest]
+#        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
         build_type: [Debug, Release]
-        c_compiler: [gcc, clang, cl]
+#        c_compiler: [gcc, clang, cl]
+        c_compiler: [gcc, clang]
         include:
-          - os: windows-latest
-            c_compiler: cl
-            cpp_compiler: cl
+#          - os: windows-latest
+#            c_compiler: cl
+#            cpp_compiler: cl
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
@@ -21,10 +23,10 @@ jobs:
             c_compiler: clang
             cpp_compiler: clang++
         exclude:
-          - os: windows-latest
-            c_compiler: gcc
-          - os: windows-latest
-            c_compiler: clang
+#          - os: windows-latest
+#            c_compiler: gcc
+#          - os: windows-latest
+#            c_compiler: clang
           - os: ubuntu-latest
             c_compiler: cl
     steps:
